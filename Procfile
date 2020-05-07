@@ -1,1 +1,1 @@
-web:node ./node_modules/nodemon/bin/nodemon.js --inspect index.js
+web:node index.js
