@@ -1,0 +1,101 @@
+<% include header.ejs %>
+    <div class="container">
+        <div class="row" id="register_row">
+            <div class="col-md-6" id="cam_col">
+                <video autoplay id="camera"></video>
+                <button id="take_snapshots" class="btn btn-secondary btn-lg btn-block">Capture</button>
+                <canvas id='snapshots'></canvas>
+            </div>
+            <div class="col-md-6" id="reg_col">
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container">
+                        <h1 class="display-4">Register</h1>
+                        <p class="lead">
+
+                            <form id="registration_form" method="post" action="/register" enctype="multipart/form-data">
+                                <div class="form-group">
+                                    <label for="name">NAME</label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name" onkeyup='validateForm("name",/^[a-zA-Z ]+$/);' required>
+                                    <p id  = "name_error"> </p>
+                                    <!--- {% if(error.name) %}
+                                    <p>{{ error.name.msg }}</p>
+                                    {% endif %}-->
+                                    <small class="form-text text-muted">Name as on your Aadhar Card</small>
+                                </div>
+                                <div class="form-group" hidden>
+                                    <input type="hidden" class="form-control" id="avatar" name="avatar" filename="name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="aadhaar">Email ID</label>
+                                    <input type="text" class="form-control" id="mailid" name="mailid" placeholder="Enter Mail iD" onkeyup='validateForm("mailid",/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/);' required>
+                                    <p id  = "mailid_error"> </p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="aadhaar">Contact No</label>
+                                    <input type="text" class="form-control" id="contact" name="contact" placeholder="Enter contact Number" onkeyup='validateForm("contact",/^[+]?(\d{1,2})?[\s.-]?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/);' required>
+                                    <p id  = "contact_error"> </p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="aadhaar">Aadhaar No.</label>
+                                    <input type="text" class="form-control" id="aadhaar" name="aadhaar" placeholder="Enter Aadhaar Number" onkeyup='validateForm("aadhaar",/^[0-9 ]+{12}$/);' required>
+                                    <p id  = "aadhaar_error"> </p>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <label class="input-group-text" for="constituency">Constituency</label>
+                                    </div>
+                                    <select class="custom-select" id="constituency" name="constituency">
+                                        <option selected>Choose...</option>
+                                        <option value="Jabalpur">Jabalpur</option>
+                                        <option value="Delhi">Delhi</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" id="register_btn" onclick="finalvalidateForm()" class="btn btn-success btn-lg btn-block" disabled>Submit</button>
+                                </div>
+                            </form>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type = "text/javascript">
+        function validateForm(el,regex) {
+            //var names = ['name', 'email', 'username', 'password', 'roll_no'];
+            var errorCount = 0;
+            console.log("enter "+el);
+            //names.forEach(function(el) {
+              var val = document.forms["registration_form"][el].value;
+              if (val == null || val == "" ) {
+                document.getElementById(el + '_error').innerHTML = "";
+                return true;
+              }
+              if (val == null || val == "" || !(regex.test( val))) {
+                document.getElementById(el + '_error').innerHTML = el.toUpperCase().replace('_', ' ') + " must be filled out with valid data";
+                return true;
+              }
+              
+              document.getElementById(el + '_error').innerHTML = "";
+            if (errorCount) return false;
+          };
+          function finalvalidateForm() {
+            var errorcount =0;
+            if (validateForm("name",/^[a-zA-Z ]+$/)){
+                errorcount++;
+            }
+            if (validateForm("mailid",/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)){
+                errorcount++;
+            }
+            if(errorcount){
+                alert("incorrect information");
+                return false
+            }
+            if(!errorcount){
+            document.getElementById("registration_form").submit();
+            }   
+        }
+    </script>
+    </body>
+
+    </html>

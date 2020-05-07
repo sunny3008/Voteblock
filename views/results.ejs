@@ -1,0 +1,127 @@
+<% include header.ejs %>
+
+	<script src="dist/2.7.2/Chart.bundle.js"></script>
+	<script src="utils.js"></script>
+	<style>
+		canvas {
+			-moz-user-select: none;
+			-webkit-user-select: none;
+			-ms-user-select: none;
+		}
+	</style>
+	jdjd
+	<div id="canvas-holder" style="width:100%">
+		<canvas id="chart-area"></canvas>
+	</div>
+	<script>
+		//var nam="<%= candidates[6].name%>";
+		//var nam=Yogesh;
+		var cand_list = []
+		// console.log(electionResults.keys())
+		for(var i=0; i<Object.values(electionResults).length;i++){
+			cand_list.push(Object.values(electionResults)[i])
+			
+		}
+		cad_list=[]
+		var m=1;
+		// "<% var f="m"%>";
+
+		// 	z="<%= f %>"
+			//console.log(z)
+
+		// for(var i=0 ;i<5;i++)
+		// {
+		// 	"<% f++ %>"
+		// 	z="<%= f %>"
+		// 	console.log(z)
+		// }
+		candidateNames = Object.keys(candidates)
+		for(var i=0; i< "<%= candidates.length%>";i++){
+			//cad_list.push(candidates[i])
+			//cad_list.push("<%= candidates[1].name%>");
+			cad_list.push(candidateNames[i])
+			//"<%=k %>"="<%= k+1 %>"
+			//console.log(j)
+		}
+		
+		//
+		var coloR = [];
+
+         var dynamicColors = function() {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            return "rgb(" + r + "," + g + "," + b + ")";
+         };
+
+         for (var i=0; i< "<%= candidates.length%>";i++) {
+            coloR.push(dynamicColors());
+         }
+
+		//
+		// console.log(electionResults.values())
+		// // console.log(cand_list)
+		var config = {
+			type: 'doughnut',
+			data: {
+				datasets: [{
+					data:// [
+
+					// electionResults.Arvind,
+					// 	electionResults.Narendra,
+					// 	electionResults.Rahul,
+					// 	electionResults.Rajnath,
+					// 	electionResults.Piyush,
+					// 	electionResults.Smriti,
+					// 	electionResults["<%= candidates[6].name%>"]
+
+			//		electionResults.values()
+				//],
+				cand_list,
+				// Object.values(electionResults),
+					 backgroundColor: //[
+					// 	window.chartColors.red,
+					// 	window.chartColors.orange,
+					// 	window.chartColors.yellow,
+					// 	window.chartColors.green,
+					// 	window.chartColors.blue,
+					// 	window.chartColors.purple,
+					// 	window.chartColors.black
+					// ],
+					coloR,
+					label: 'Elections'
+				}],
+				labels: //[
+				// 	'Arvind Kejrival',
+				// 	'Narendra Modi',
+				// 	'Rahul Gandhi',
+				// 	'Rajnath Singh',
+				// 	'Piyush Goyal',
+				// 	'Smriti Irani',
+				// 	"<%= candidates[6].name%>"
+				// ]
+					cad_list
+			},
+			options: {
+				responsive: true,
+				legend: {
+					position: 'top',
+				},
+				title: {
+					display: true,
+					text: 'Election Poll Results'
+				},
+				animation: {
+					animateScale: true,
+					animateRotate: true
+				}
+			}
+		};
+
+		window.onload = function () {
+			var ctx = document.getElementById('chart-area').getContext('2d');
+			window.myDoughnut = new Chart(ctx, config);
+		};
+	</script>
+	</body>
+	</html>
